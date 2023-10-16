@@ -1,0 +1,62 @@
+.card-container {
+  max-width: 200px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.card-img {
+  height: 200px;
+}
+
+.card-body {
+  height: 180px;
+  border-top: 1px solid #a7a7a7;
+}
+
+.card-brand {
+  width: fit-content;
+  padding: 0 4px;
+  font-weight: 600;
+  color: white;
+  background-color: #a7a7a7;
+  border-radius: 4px;
+}
+
+.card-name,
+.card-second-name {
+  width: 100%;
+  height: fit-content;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.card-second-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-price {
+  font-weight: 600;
+  color: red;
+}
+
+.card-old-price {
+  text-decoration: line-through;
+  text-decoration-color: black;
+  text-decoration-thickness: 10%;
+  color: #858585;
+}
+
+.card-discount {
+  width: fit-content;
+  height: fit-content;
+  background-color: #ffeded;
+  border: 1px solid red;
+  border-radius: 2px;
+  padding: 0 4px;
+  color: red;
+  margin-left: 20px;
+}

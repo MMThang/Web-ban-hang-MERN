@@ -1,0 +1,41 @@
+.first-main-body {
+  margin-top: 98px;
+}
+
+.carousel-holder {
+}
+
+.third-col {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-showcase {
+  width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+  .first-main-body {
+    padding-bottom: 194px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .third-col {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .first-main-body {
+    margin-top: 12px;
+    padding-bottom: 228px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .first-main-body {
+    padding-bottom: 0;
+  }
+}

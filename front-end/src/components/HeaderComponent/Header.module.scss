@@ -1,0 +1,167 @@
+.bg-custom-primary {
+  background-color: var(--primary);
+  border-bottom: 1px solid yellow;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+}
+
+.navbar-logo {
+  height: 100%;
+  color: white;
+  padding: 16px 12px 16px 0;
+  user-select: none;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.navbar-logo-image {
+  width: 100px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary);
+}
+
+.navbar-link-group {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 100%;
+  border-right: 1px solid yellow;
+  border-left: 1px solid yellow;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+  user-select: none;
+  padding: 8px 12px;
+
+  &:hover {
+    color: white;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  &:focus {
+    color: white;
+  }
+}
+
+.navbar-login {
+  margin-left: 8px;
+}
+
+.popover-header {
+  font-size: 2rem;
+  background-color: var(--primary);
+  color: white;
+}
+
+.popover-body {
+  padding: 0;
+}
+
+.popover-body-item {
+  font-size: 1.8rem;
+  padding: 4px 8px;
+  border-bottom: 1px solid #c0c2c5;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border: 1px solid yellow;
+}
+
+.user-name {
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+  .navbar-item {
+    &:first-child {
+      margin-left: 24px;
+    }
+  }
+}
+
+//tablet
+@media screen and (max-width: 992px) {
+  .bg-custom-primary {
+    position: relative;
+  }
+
+  .navbar-collapse {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .navbar-link-group {
+    flex-direction: row;
+    justify-content: start;
+  }
+
+  .navbar-item {
+    width: 80px;
+    height: 40px;
+  }
+
+  .responsive-span {
+    display: none;
+  }
+
+  .navbar-toggler-icon {
+    border: 1px solid var(--emphasize-color);
+    background-color: white;
+  }
+}

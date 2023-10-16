@@ -1,0 +1,34 @@
+.not-found-main-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 98px auto 0;
+  background-color: white;
+  width: 1000px;
+  height: 820px;
+}
+
+.header {
+  font-size: 10rem;
+  color: var(--primary);
+}
+
+.text {
+  font-size: 5rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .not-found-main-body {
+    height: 694px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .not-found-main-body {
+    width: 100%;
+    height: 658px;
+    margin-top: 12px;
+    padding: 0 16px;
+  }
+}

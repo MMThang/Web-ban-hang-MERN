@@ -1,0 +1,27 @@
+:root {
+  --primary: #272657;
+  --text-color: #161823;
+  --emphasize-color: #8b0001;
+
+  --font-family: arial;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #ececec;
+  font-family: var(--font-family);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizespeed;
+  color: var(--text-color);
+  overflow-y: overlay;
+}

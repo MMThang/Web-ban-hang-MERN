@@ -1,0 +1,30 @@
+.footer-container {
+  // position: fixed;
+  // bottom: 0;
+  width: 100%;
+  background-color: var(--primary);
+  color: white;
+  margin-top: 12px;
+}
+
+.footer-header {
+  font-size: 3rem;
+  font-weight: 600;
+  padding: 8px 0;
+  border-bottom: 1px solid white;
+}
+
+.footer-row {
+  padding-top: 8px;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .footer-container {
+    position: absolute;
+    bottom: 0;
+  }
+}

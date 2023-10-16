@@ -1,0 +1,76 @@
+.user-info-container {
+  margin: 98px auto 0;
+}
+
+.user-info-main-body {
+  background-color: white;
+  width: 1000px;
+  height: 820px;
+}
+
+.form-wrapper {
+  margin: auto;
+  padding: 20px 20px 0;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  font-size: 4rem;
+}
+
+.label {
+  font-size: 2rem;
+}
+
+.avatar-img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+.avatar-upload-btn {
+  font-size: 2rem;
+  width: 100%;
+}
+
+.input {
+  height: 45px;
+  font-size: 2.2rem;
+  border: 1px solid var(--primary);
+}
+
+.button {
+  height: 40px;
+  width: 100px;
+  font-size: 1.6rem;
+
+  &:nth-child(2) {
+    margin-left: 8px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .user-info-container {
+    margin: 0 auto;
+  }
+  .user-info-main-body {
+    width: 100%;
+    height: 850px;
+    margin-top: 12px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .user-info-main-body {
+    height: 695px;
+  }
+
+  .form-wrapper {
+    width: 100%;
+    padding: 20px 12px;
+  }
+
+  .input {
+    width: 100%;
+  }
+}
