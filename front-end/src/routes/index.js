@@ -1,10 +1,13 @@
 import HomePage from "../pages/HomePage";
 import ProductPage from "../pages/ProductPage";
+import ProductsCollectionPage from "../pages/ProductsCollectionPage";
+import SearchedProductPage from "../pages/SearchedProductPage";
 import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
 import UserInfoPage from "../pages/UserInfoPage";
 import AdminUserPage from "../pages/AdminUserPage";
 import AdminProductPage from "../pages/AdminProductPage";
+import AdUpdateProductPage from "../pages/AdUpdateProductPage";
 import NotFoundPage from "../pages/NotFoundPage";
 
 const routes = [
@@ -17,6 +20,18 @@ const routes = [
   {
     path: "/product/:param",
     element: <ProductPage />,
+    isPrivate: false,
+    isAdmin: false,
+  },
+  {
+    path: "/collections/:type",
+    element: <ProductsCollectionPage />,
+    isPrivate: false,
+    isAdmin: false,
+  },
+  {
+    path: "/search/result",
+    element: <SearchedProductPage />,
     isPrivate: false,
     isAdmin: false,
   },
@@ -47,6 +62,12 @@ const routes = [
   {
     path: "/system/admin/products",
     element: <AdminProductPage />,
+    isPrivate: true,
+    isAdmin: true,
+  },
+  {
+    path: "/system/admin/products/:params",
+    element: <AdUpdateProductPage />,
     isPrivate: true,
     isAdmin: true,
   },

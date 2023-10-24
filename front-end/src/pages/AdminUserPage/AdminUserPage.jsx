@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
+import LoadingComponent from "../../components/LoadingComponent";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Button from "react-bootstrap/esm/Button";
@@ -33,7 +34,7 @@ function AdminUserPage() {
     isError,
   } = useQuery(["getallusers"], fetchAllUser);
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <LoadingComponent />;
   if (isError) return "An error has occurred: " + isError.message;
 
   return (
@@ -61,17 +62,19 @@ function AdminUserPage() {
           <button
             onClick={() => navigate("/system/admin/users")}
             className={cx("admin-btn")}
+            style={{ backgroundColor: "#ccc" }}
           >
             Người dùng
           </button>
           <button
-            onClick={() => navigate("/system/admin/products")}
+            onClick={() => navigate("/system/admin/products?page=1")}
             className={cx("admin-btn")}
           >
             Sản phẩm
           </button>
         </Col>
         <Col xl={10} style={{ padding: "0" }}>
+          <div style={{ fontSize: "3rem" }}>Danh sách người dùng</div>
           <Table striped bordered hover variant="white">
             <thead>
               <tr>

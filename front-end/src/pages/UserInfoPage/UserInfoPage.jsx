@@ -114,7 +114,7 @@ function UserInfoPage() {
         <Form as={Row} className={cx("form-wrapper")}>
           <h1 className={cx("header")}>Thông tin cá nhân</h1>
 
-          <Col xl={3}>
+          <Col sm={12} xl={3}>
             <Form.Group
               className="mb-3"
               style={{
@@ -147,7 +147,7 @@ function UserInfoPage() {
               />
             </Form.Group>
           </Col>
-          <Col xl={9}>
+          <Col sm={12} xl={9}>
             <Form.Group className="mb-3">
               <Form.Label className={cx("label")}>Email</Form.Label>
               <Form.Control

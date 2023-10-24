@@ -102,7 +102,8 @@ function SignInPage() {
               }}
             />
           </Form.Group>
-          {mutation.error?.response.data.status === "user not found ERR" && (
+          {(mutation.error?.response.data.status === "user not found ERR" ||
+            mutation.error?.response.data.status === "login ERR") && (
             <span>Tài khoản hoặc mật khẩu không đúng</span>
           )}
           {mutation.isLoading && <LoadingComponent />}

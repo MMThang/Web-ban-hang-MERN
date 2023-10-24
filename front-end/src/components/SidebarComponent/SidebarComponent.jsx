@@ -4,13 +4,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { useNavigate } from "react-router-dom";
+import { toLowerCaseNonAccentVietnamese } from "../../utils";
 
 const cx = classNames.bind(styles);
 
 //sub-component
 function SidebarItem(itemName, index) {
+  const navigate = useNavigate();
   return (
-    <li className={cx("sidebar-item")} key={index}>
+    <li
+      className={cx("sidebar-item")}
+      key={index}
+      onClick={() =>
+        navigate(
+          `/collections/${toLowerCaseNonAccentVietnamese(itemName)}?page=1`
+        )
+      }
+    >
       {itemName}
       <FontAwesomeIcon
         icon={faAngleRight}

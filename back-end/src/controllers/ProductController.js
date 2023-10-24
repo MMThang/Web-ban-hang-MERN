@@ -18,6 +18,9 @@ const createProduct = async (req, res) => {
     if (!discount) {
       req.body.discount = 0;
     }
+    if (!rating) {
+      req.body.rating = 0;
+    }
 
     if (
       !params_name ||
@@ -26,7 +29,6 @@ const createProduct = async (req, res) => {
       !type ||
       !brand ||
       !price ||
-      !rating ||
       !countInStock ||
       !description
     ) {
@@ -65,12 +67,31 @@ const getListProduct = async (req, res) => {
     const query = {
       type: req.params.type,
       brand: req.query.brand,
+      range: req.query.range || [0, Infinity],
       limit: req.headers.limit,
       page: req.query.page || 1,
       sortType: req.query.sort_type || "price",
       sort: req.query.sort || "asc",
     };
     const respond = await ProductService.getListProductService(query);
+    return res.status(200).json(respond);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      status: "ERR",
+      message: error,
+    });
+  }
+};
+
+const searchProduct = async (req, res) => {
+  try {
+    const query = {
+      q: req.query.q,
+      page: req.query.page || 1,
+      limit: req.headers.limit,
+    };
+    const respond = await ProductService.searchProductService(query);
     return res.status(200).json(respond);
   } catch (error) {
     console.log(error);
@@ -112,6 +133,7 @@ module.exports = {
   createProduct,
   getOneProduct,
   getListProduct,
+  searchProduct,
   updateProduct,
   deleteProduct,
 };

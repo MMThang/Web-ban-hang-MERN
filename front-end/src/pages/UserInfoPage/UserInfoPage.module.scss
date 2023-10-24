@@ -50,20 +50,28 @@
   }
 }
 
+@media screen and (max-width: 1200px) {
+  .user-info-main-body {
+    height: fit-content;
+    padding-bottom: 12px;
+  }
+}
 @media screen and (max-width: 992px) {
   .user-info-container {
     margin: 0 auto;
   }
   .user-info-main-body {
     width: 100%;
-    height: 850px;
     margin-top: 12px;
+  }
+  .form-wrapper {
+    height: 100%;
   }
 }
 @media screen and (max-width: 768px) {
-  .user-info-main-body {
-    height: 695px;
-  }
+  // .user-info-main-body {
+  //   height: 695px;
+  // }
 
   .form-wrapper {
     width: 100%;

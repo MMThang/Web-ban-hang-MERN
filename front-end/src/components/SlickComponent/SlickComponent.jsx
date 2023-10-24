@@ -11,6 +11,8 @@ function SlickComponent({ itemArr, sliderHeader }) {
   const settings = {
     dots: false,
     infinite: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
@@ -39,19 +41,19 @@ function SlickComponent({ itemArr, sliderHeader }) {
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 576,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
         },
       },
-      {
-        breakpoint: 425,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
+      // {
+      //   breakpoint: 425,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1,
+      //   },
+      // },
     ],
   };
 

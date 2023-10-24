@@ -8,13 +8,15 @@ const productSchema = new mongoose.Schema(
     type: { type: String, required: true },
     brand: { type: String, required: true },
     price: { type: Number, required: true },
-    discount: { type: Number },
-    rating: { type: Number, required: true },
+    discount: { type: Number, default: 1 },
+    rating: { type: Number, default: 1 },
     countInStock: { type: Number, required: true },
     description: { type: String, required: true },
   },
   { timestamps: true }
 );
+
+productSchema.index({ params_name: "text" });
 
 const Product = mongoose.model("Product", productSchema);
 

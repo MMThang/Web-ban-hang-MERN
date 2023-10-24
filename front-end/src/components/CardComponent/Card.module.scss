@@ -28,7 +28,7 @@
 .card-second-name {
   width: 100%;
   height: fit-content;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
@@ -59,4 +59,10 @@
   padding: 0 4px;
   color: red;
   margin-left: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .card-container {
+    max-width: 180px;
+  }
 }

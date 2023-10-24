@@ -7,14 +7,22 @@ import { axiosJWT, getUser, refreshToken } from "./service/UserService";
 import { updateUser } from "./redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { PrivateRoute, AdminRoute } from "./routes/SpecialRoute";
+import { QueryParamProvider } from "use-query-params";
+import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 
 function App() {
   const dispatch = useDispatch();
 
   const handleGetUser = useCallback(
     async (id, accessToken) => {
-      const res = await getUser(id, accessToken);
-      dispatch(updateUser({ ...res?.data, access_token: accessToken }));
+      try {
+        const res = await getUser(id, accessToken);
+        dispatch(updateUser({ ...res?.data, access_token: accessToken }));
+      } catch (error) {
+        if (error.response.data.status === "token ERR") {
+          localStorage.removeItem("access_token");
+        }
+      }
     },
     [dispatch]
   );
@@ -43,40 +51,41 @@ function App() {
       let { decoded } = handleDecoded();
       if (decoded?.exp < currentTime.getTime() / 1000) {
         const data = await refreshToken();
-
         config.headers["token"] = `Bearer ${data?.access_token}`;
       }
       return config;
     },
     function (error) {
-      console.log(error);
+      return Promise.reject(error);
     }
   );
 
   return (
     <Router>
-      <Routes>
-        {routes.map(
-          (route, index) => {
-            return route.isPrivate ? (
-              route.isAdmin ? (
-                <Route element={<AdminRoute />} key={index}>
-                  <Route element={route.element} path={route.path} />
-                </Route>
+      <QueryParamProvider adapter={ReactRouter6Adapter}>
+        <Routes>
+          {routes.map(
+            (route, index) => {
+              return route.isPrivate ? (
+                route.isAdmin ? (
+                  <Route element={<AdminRoute />} key={index}>
+                    <Route element={route.element} path={route.path} />
+                  </Route>
+                ) : (
+                  <Route element={<PrivateRoute />} key={index}>
+                    <Route element={route.element} path={route.path} />
+                  </Route>
+                )
               ) : (
-                <Route element={<PrivateRoute />} key={index}>
-                  <Route element={route.element} path={route.path} />
-                </Route>
-              )
-            ) : (
-              <Route key={index} path={route.path} element={route.element} />
-            );
-          }
-          // return (
-          //   <Route key={index} path={route.path} element={route.element} />
-          // );
-        )}
-      </Routes>
+                <Route key={index} path={route.path} element={route.element} />
+              );
+            }
+            // return (
+            //   <Route key={index} path={route.path} element={route.element} />
+            // );
+          )}
+        </Routes>
+      </QueryParamProvider>
     </Router>
   );
 }

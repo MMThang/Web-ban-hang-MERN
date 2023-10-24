@@ -42,7 +42,10 @@ function ProductPage() {
       <Container className={cx("first-main-body")}>
         <Row>
           <Col xxl={4} className={cx("product-image-column")}>
-            <Image src={laptop} className={cx("product-image")} />
+            <Image
+              src={productData.data.image}
+              className={cx("product-image")}
+            />
           </Col>
           <Col xxl={6} className={cx("product-info-column")}>
             <p className={cx("product-name")}>{productData.data.name}</p>

@@ -26,19 +26,25 @@
   }
 }
 
-.select-product {
-  height: 50px;
-  width: 30%;
-  font-size: 1.8rem;
-}
-
-.add-product-btn {
-  width: 30%;
-  height: 50px;
-  font-size: 1.8rem;
+.form-label {
+  font-size: 2.2rem;
+  margin-top: 12px;
+  margin-bottom: 0;
 }
 
 .form-control {
-  height: 35px;
-  font-size: 1.8rem;
+  width: 500px;
+  height: 50px;
+  font-size: 2rem;
+}
+
+.form-btn {
+  margin-top: 12px;
+  width: 120px;
+  height: 40px;
+  font-size: 2rem;
+
+  &:last-child {
+    margin-left: 8px;
+  }
 }

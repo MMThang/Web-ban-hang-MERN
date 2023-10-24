@@ -17,3 +17,9 @@
   padding-left: 8px;
   padding-bottom: 12px;
 }
+
+@media screen and (max-width: 768px) {
+  .slick-container {
+    padding-right: 8px;
+  }
+}

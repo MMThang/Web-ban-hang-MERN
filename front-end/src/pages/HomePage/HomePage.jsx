@@ -16,92 +16,54 @@ import * as ProductService from "../../service/ProductService";
 
 const cx = classNames.bind(styles);
 
-const testItem = [
-  {
-    image: laptop,
-    brand: "LG",
-    name: "Laptop 1F6B LGLGLGLGLGLGLGLGGLfsadfasdfasdf",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-  {
-    image: laptop,
-    brand: "Acer",
-    name: "Laptop 1F6B LG",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-  {
-    image: laptop,
-    brand: "Acer",
-    name: "Laptop 1F6B LG",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-  {
-    image: laptop,
-    brand: "Acer",
-    name: "Laptop 1F6B LG",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-  {
-    image: laptop,
-    brand: "Acer",
-    name: "Laptop 1F6B LG",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-  {
-    image: laptop,
-    brand: "Acer",
-    name: "Laptop 1F6B LG",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-  {
-    image: laptop,
-    brand: "Acer",
-    name: "Laptop 1F6B LG",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-  {
-    image: laptop,
-    brand: "Acer",
-    name: "Laptop 1F6B LG",
-    price: 100000,
-    old_price: 300000,
-    navigate: "/product",
-  },
-];
-
 function HomePage() {
   const fetchLaptopGamingList = async () => {
     const res = await ProductService.getListProduct("laptop-gaming", 12);
     return res;
   };
+  const fetchLaptopList = async () => {
+    const res = await ProductService.getListProduct("laptop", 12);
+    return res;
+  };
+  const fetchKeyboardList = async () => {
+    const res = await ProductService.getListProduct("ban-phim", 12);
+    return res;
+  };
   const {
-    data: products,
-    isLoading,
-    isError,
-  } = useQuery(["product"], fetchLaptopGamingList, {
+    data: laptopGamingProducts,
+    isLoading: isLoadingLaptopGaming,
+    isError: isErrorLaptopGaming,
+  } = useQuery(["productLaptopGaming"], fetchLaptopGamingList, {
+    retry: 3,
+    retryDelay: 1000,
+  });
+  const {
+    data: laptopProducts,
+    isLoading: isLoadingLaptop,
+    isError: isErrorLaptop,
+  } = useQuery(["productLaptop"], fetchLaptopList, {
+    retry: 3,
+    retryDelay: 1000,
+  });
+  const {
+    data: keyboardProducts,
+    isLoading: isLoadingKeyboard,
+    isError: isErrorKeyboard,
+  } = useQuery(["productKeyboard"], fetchKeyboardList, {
     retry: 3,
     retryDelay: 1000,
   });
 
-  console.log(products);
-
   //Không được xóa
-  if (isLoading) return "Loading...";
-  if (isError) return "An error has occurred: " + isError.message;
+  if (isErrorLaptopGaming)
+    return "An error has occurred: " + isErrorLaptopGaming.message;
+  //Không được xóa
+  //Không được xóa
+  if (isErrorLaptop) return "An error has occurred: " + isErrorLaptop.message;
+  //Không được xóa
+  //Không được xóa
+  if (isErrorKeyboard)
+    return "An error has occurred: " + isErrorKeyboard.message;
   //Không được xóa
 
   return (
@@ -121,21 +83,58 @@ function HomePage() {
           </Col>
         </Row>
         <Row>
-          <Col xl={12}>
-            <SlickComponent
-              itemArr={products.data}
-              sliderHeader="Laptop bán chạy"
-            />
-          </Col>
+          {isLoadingLaptopGaming ? (
+            <div className={cx("isLoading")}>
+              <div className={cx("isLoading-heading")}>Laptop bán chạy</div>
+              <div className={cx("isLoading-text-box")}>
+                Đang tải dữ liệu...
+              </div>
+            </div>
+          ) : (
+            <Col xl={12}>
+              <SlickComponent
+                itemArr={laptopGamingProducts.data}
+                sliderHeader="Laptop Gaming bán chạy"
+              />
+            </Col>
+          )}
         </Row>
-        {/* <Row>
-          <Col xl={12}>
-            <SlickComponent
-              itemArr={products.data}
-              sliderHeader="Phím cơ bán chạy bán chạy"
-            />
-          </Col>
-        </Row> */}
+        <Row>
+          {isLoadingLaptop ? (
+            <div className={cx("isLoading")}>
+              <div className={cx("isLoading-heading")}>Laptop bán chạy</div>
+              <div className={cx("isLoading-text-box")}>
+                Đang tải dữ liệu...
+              </div>
+            </div>
+          ) : (
+            <Col xl={12}>
+              <SlickComponent
+                itemArr={laptopProducts.data}
+                sliderHeader="Laptop bán chạy"
+              />
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {isLoadingKeyboard ? (
+            <div className={cx("isLoading")}>
+              <div className={cx("isLoading-heading")}>
+                Phím cơ bán chạy bán chạy
+              </div>
+              <div className={cx("isLoading-text-box")}>
+                Đang tải dữ liệu...
+              </div>
+            </div>
+          ) : (
+            <Col xl={12}>
+              <SlickComponent
+                itemArr={keyboardProducts.data}
+                sliderHeader="Phím cơ bán chạy bán chạy"
+              />
+            </Col>
+          )}
+        </Row>
       </Container>
       <FooterComponent />
     </div>
