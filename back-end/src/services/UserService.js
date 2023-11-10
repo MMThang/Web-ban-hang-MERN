@@ -1,4 +1,5 @@
 const User = require("../models/UserModel");
+const Product = require("../models/ProductModel");
 const bcrypt = require("bcrypt");
 const JwtService = require("./JwtService");
 

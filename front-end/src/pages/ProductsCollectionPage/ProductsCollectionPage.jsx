@@ -5,13 +5,11 @@ import HeaderComponent from "../../components/HeaderComponent";
 import FooterComponent from "../../components/FooterComponent";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import CardComponent from "../../components/CardComponent";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
-import Stack from "react-bootstrap/Stack";
 import Form from "react-bootstrap/Form";
 import Slider from "react-slider";
 import LoadingComponent from "../../components/LoadingComponent";
@@ -93,21 +91,20 @@ function ProductsCollectionPage() {
             overlay={
               <Popover style={{ boxShadow: "0 2px 20px rgba(0, 0, 0, 0.5)" }}>
                 <Popover.Body style={{ width: "256px" }}>
-                  <Stack direction="horizontal" className={cx("badge-grid")}>
-                    {brandArray.map((brand) => {
-                      return (
-                        <Badge
-                          className={cx("brand-badge")}
-                          key={brand}
-                          pill
-                          bg="warning"
-                          text="dark"
-                        >
-                          {brand}
-                        </Badge>
-                      );
-                    })}
-                  </Stack>
+                  {brandArray.map((brand) => {
+                    return (
+                      <Badge
+                        className={cx("brand-badge")}
+                        key={brand}
+                        pill
+                        bg="warning"
+                        text="dark"
+                      >
+                        {brand}
+                      </Badge>
+                    );
+                  })}
+
                   <div className={cx("brand-btn-display")}>
                     {productsCollection.brands.map((brand) => {
                       return (
@@ -214,7 +211,6 @@ function ProductsCollectionPage() {
         </Form.Select>
       </Container>
       <Container className={cx("products-collection-container")}>
-        {/* <div className={cx("products-collection-main-body")}> */}
         <Row className={cx("products-collection-main-body")}>
           {productsCollection.data.map((product, index) => {
             return (
@@ -236,7 +232,6 @@ function ProductsCollectionPage() {
             );
           })}
         </Row>
-        {/* </div> */}
         <PaginationComponent
           totalPage={productsCollection.totalPage}
           size="lg"

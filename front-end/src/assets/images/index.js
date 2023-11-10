@@ -9,5 +9,3 @@ export const nullProfile = require("./nullProfile.png");
 export const slickerArr = [slicker1, slicker2];
 
 export const productImgArr = [productImg1, productImg2];
-
-export const laptop = require("./laptop.webp");

@@ -7,12 +7,6 @@
   justify-content: space-between;
 }
 
-.badge-grid,
-.brand-btn-display {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .brand-badge,
 .brand-btn,
 .popover-btn,
@@ -21,6 +15,7 @@
 }
 .brand-badge,
 .brand-btn {
+  width: fit-content;
   margin-right: 4px;
   margin-top: 4px;
 }
@@ -88,12 +83,6 @@
   padding-right: 0;
   margin-bottom: 10px;
   justify-content: space-evenly;
-}
-
-@media screen and (max-width: 1400px) {
-}
-
-@media screen and (max-width: 1200px) {
 }
 
 @media screen and (max-width: 992px) {

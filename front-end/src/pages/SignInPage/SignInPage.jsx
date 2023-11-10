@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import { useDispatch } from "react-redux";
 import className from "classnames/bind";
@@ -18,6 +18,7 @@ const cx = className.bind(styles);
 function SignInPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,11 +35,15 @@ function SignInPage() {
 
   useEffect(() => {
     if (mutation.isSuccess) {
+      if (location?.state) {
+        navigate(location?.state);
+      } else {
+        navigate("/");
+      }
       localStorage.setItem(
         "access_token",
         JSON.stringify(mutationData?.access_token)
       );
-      navigate("/");
 
       if (mutationData.access_token) {
         const decoded = jwt_decode(mutationData.access_token);
@@ -96,8 +101,6 @@ function SignInPage() {
               className={cx("input")}
               value={password}
               onChange={(e) => {
-                // const trimValue = e.target.value.trim();
-                // setPassword(trimValue);
                 setPassword(e.target.value);
               }}
             />
@@ -109,7 +112,6 @@ function SignInPage() {
           {mutation.isLoading && <LoadingComponent />}
           <Button
             variant="primary"
-            // type="submit"
             className={cx("submit-btn")}
             onClick={handleSignIn}
           >

@@ -110,6 +110,7 @@ const getListProductService = (query) => {
       sortObj[query.sortType] = query.sort;
       const totalProduct = await Product.count({ type: query.type });
       const allProduct = await Product.find({ type: query.type });
+
       const listProduct = await Product.find({
         type: query.type,
         brand: query.brand,
@@ -121,6 +122,12 @@ const getListProductService = (query) => {
         .skip((query.page - 1) * query.limit)
         .limit(query.limit)
         .sort(sortObj);
+
+      const outOfStockProduct = await Product.find({
+        countInStock: 0,
+      })
+        .skip((query.page - 1) * query.limit)
+        .limit(query.limit);
 
       const brandFromUseQuery = [];
       let min = allProduct[0].price;
@@ -150,6 +157,7 @@ const getListProductService = (query) => {
           status: "OK",
           message: "SUCCESS",
           data: listProduct,
+          outOfStock: outOfStockProduct,
           totalProduct,
           brands: brandList,
           priceRange: [min, max],

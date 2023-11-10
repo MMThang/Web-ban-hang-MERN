@@ -27,15 +27,20 @@ function HeaderComponent() {
 
   const handleLogout = async () => {
     localStorage.removeItem("access_token");
-    const res = await signOutUser();
+    await signOutUser();
     dispatch(logoutUser());
     navigate("/");
   };
 
+  const decodeJWT = (auth) => {
+    const { id, isAdmin } = jwtDecode(auth);
+    return { id, isAdmin };
+  };
+
   const adminPageDisplay = () => {
     const auth = localStorage.getItem("access_token");
-    const decoded = auth ? jwtDecode(auth) : null;
-    return decoded?.isAdmin ? true : false;
+    const { isAdmin } = auth ? decodeJWT(auth) : null;
+    return isAdmin ? true : false;
   };
 
   return (
@@ -59,11 +64,14 @@ function HeaderComponent() {
           <Nav className={cx("me-auto", "navbar-collapse")}>
             <InputComponent />
             <div className={cx("navbar-link-group")}>
-              <Nav.Item href="/gio-hang" className={cx("navbar-item")}>
+              <Nav.Item
+                className={cx("navbar-item")}
+                onClick={() => navigate(`/order`)}
+              >
                 <div>
                   <FontAwesomeIcon icon={faCartShopping} />
                   <Badge bg="danger" style={{ marginLeft: "4px" }}>
-                    0
+                    {user?.cart?.length}
                   </Badge>
                 </div>
                 <div
@@ -108,6 +116,14 @@ function HeaderComponent() {
                         </div>
                         <div
                           className={cx("popover-body-item")}
+                          onClick={() => {
+                            navigate(`/my-order/${user._id}`);
+                          }}
+                        >
+                          Đơn hàng của tôi
+                        </div>
+                        <div
+                          className={cx("popover-body-item")}
                           onClick={handleLogout}
                         >
                           Đăng xuất
@@ -131,7 +147,7 @@ function HeaderComponent() {
                       />
                     )}
                     <span className={cx("user-name", "responsive-span")}>
-                      {user?.name.split(" ")[user?.name.split(" ").length - 1]}
+                      {user?.name}
                     </span>
                   </Nav.Item>
                 </OverlayTrigger>

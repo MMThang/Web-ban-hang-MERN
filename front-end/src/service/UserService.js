@@ -61,6 +61,44 @@ export const updateUser = async (id, data, access_token) => {
   return res.data;
 };
 
+export const deleteUser = async ({ id, access_token }) => {
+  const res = await axiosJWT.delete(
+    `${process.env.REACT_APP_BACKEND_URL}/user/delete-user/${id}`,
+    {
+      headers: {
+        token: `Bearer ${access_token}`,
+      },
+    }
+  );
+  return res.data;
+};
+
+export const addCartProduct = async (id, data, access_token) => {
+  const res = await axiosJWT.put(
+    `${process.env.REACT_APP_BACKEND_URL}/user/add-product/${id}`,
+    data,
+    {
+      headers: {
+        token: `Bearer ${access_token}`,
+      },
+    }
+  );
+  return res.data;
+};
+
+export const removeCartProduct = async (id, data, access_token) => {
+  const res = await axiosJWT.put(
+    `${process.env.REACT_APP_BACKEND_URL}/user/remove-product/${id}`,
+    data,
+    {
+      headers: {
+        token: `Bearer ${access_token}`,
+      },
+    }
+  );
+  return res.data;
+};
+
 export const refreshToken = async () => {
   const res = await axios.post(
     `${process.env.REACT_APP_BACKEND_URL}/user/refresh-token`,

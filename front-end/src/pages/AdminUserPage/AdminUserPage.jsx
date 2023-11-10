@@ -7,24 +7,32 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 import LoadingComponent from "../../components/LoadingComponent";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Button from "react-bootstrap/esm/Button";
-import { getAllUser } from "../../service/UserService";
+import { getAllUser, deleteUser } from "../../service/UserService";
 import { useQuery } from "@tanstack/react-query";
+import { useMutationHook } from "../../hooks/useMutationHook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 const cx = classnames.bind(styles);
 
 function AdminUserPage() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const params = useParams();
-  const access_token = localStorage.getItem("access_token");
+
+  const deleteUserMutation = useMutationHook(deleteUser);
+
+  useEffect(() => {
+    if (deleteUserMutation.isSuccess) {
+      alert("Xóa thành công");
+    }
+  }, [deleteUserMutation.isSuccess]);
 
   const fetchAllUser = async () => {
-    const res = await getAllUser(access_token);
+    const res = await getAllUser(user?.access_token);
     return res;
   };
 
@@ -36,6 +44,15 @@ function AdminUserPage() {
 
   if (isLoading) return <LoadingComponent />;
   if (isError) return "An error has occurred: " + isError.message;
+
+  const handleDeleteUser = (id) => {
+    let comfirmation = prompt('Nhâp "YES" để xác nhận xóa người dùng');
+    if (comfirmation === "YES") {
+      deleteUserMutation.mutate({ id, access_token: user?.access_token });
+    } else {
+      alert("Xóa không thành công");
+    }
+  };
 
   return (
     <Container fluid style={{ padding: "0" }}>
@@ -84,6 +101,7 @@ function AdminUserPage() {
                 <th>Điện thoại</th>
                 <th>Thành phố</th>
                 <th>Admin</th>
+                <th>Xóa</th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +115,14 @@ function AdminUserPage() {
                     <td>{user.city}</td>
                     <td>
                       {user.isAdmin ? <FontAwesomeIcon icon={faCheck} /> : null}
+                    </td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDeleteUser(user._id)}
+                      >
+                        Xóa
+                      </Button>
                     </td>
                   </tr>
                 );

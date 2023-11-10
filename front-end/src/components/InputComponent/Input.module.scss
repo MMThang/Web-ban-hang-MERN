@@ -1,5 +1,6 @@
 :root {
   --input-height: 40px;
+  --input-width: 524px;
 }
 
 .search-group {
@@ -9,6 +10,7 @@
   justify-content: center;
   align-items: center;
   padding: 8px 0;
+  position: relative;
 }
 
 .search-input {
@@ -44,14 +46,45 @@
   }
 }
 
-//tablet
-@media screen and (max-width: 992px) {
+.search-result {
+  background-color: white;
+  position: absolute;
+  transform: translateY(60%);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  width: var(--input-width);
+  z-index: 99;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-result-item-container {
+  border-bottom: 1px solid #ccc;
+  padding: 4px 8px;
+
+  &:hover .search-result-item-name {
+    color: red;
+  }
+}
+
+@media screen and (max-width: 1200px) {
   .search-group {
     width: 100%;
     margin-right: 12px;
   }
+}
 
+//tablet
+@media screen and (max-width: 992px) {
   .search-input {
     width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .search-group {
+    margin-right: 0;
+  }
+
+  .search-result {
+    transform: translateY(100%);
   }
 }

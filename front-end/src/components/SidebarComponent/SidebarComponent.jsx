@@ -9,28 +9,6 @@ import { toLowerCaseNonAccentVietnamese } from "../../utils";
 
 const cx = classNames.bind(styles);
 
-//sub-component
-function SidebarItem(itemName, index) {
-  const navigate = useNavigate();
-  return (
-    <li
-      className={cx("sidebar-item")}
-      key={index}
-      onClick={() =>
-        navigate(
-          `/collections/${toLowerCaseNonAccentVietnamese(itemName)}?page=1`
-        )
-      }
-    >
-      {itemName}
-      <FontAwesomeIcon
-        icon={faAngleRight}
-        className={cx("sidebar-arrow-icon")}
-      />
-    </li>
-  );
-}
-
 const items = [
   "Laptop",
   "Laptop Gaming",
@@ -38,12 +16,12 @@ const items = [
   "PC Gaming",
   "Màn hình",
   "Bàn phím",
-  "Chuột & Lót chuột",
+  "Chuột máy tính",
   "Tai nghe",
-  "Linh kiện PC",
 ];
 
 function SidebarComponent() {
+  const navigate = useNavigate();
   const [sidebar, setSidebar] = useState(false);
   const { width } = useWindowDimensions();
 
@@ -67,7 +45,23 @@ function SidebarComponent() {
         }}
       >
         {items.map((item, index) => {
-          return SidebarItem(item, index);
+          return (
+            <li
+              className={cx("sidebar-item")}
+              key={index}
+              onClick={() =>
+                navigate(
+                  `/collections/${toLowerCaseNonAccentVietnamese(item)}?page=1`
+                )
+              }
+            >
+              {item}
+              <FontAwesomeIcon
+                icon={faAngleRight}
+                className={cx("sidebar-arrow-icon")}
+              />
+            </li>
+          );
         })}
       </ul>
     </>

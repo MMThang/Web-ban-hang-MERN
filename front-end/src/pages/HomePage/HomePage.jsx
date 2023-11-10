@@ -9,14 +9,17 @@ import SidebarComponent from "../../components/SidebarComponent";
 import CarouselComponent from "../../components/CarouselComponent";
 import { slickerArr, productImgArr } from "../../assets/images";
 import SlickComponent from "../../components/SlickComponent";
-import { laptop } from "../../assets/images";
 import FooterComponent from "../../components/FooterComponent";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../service/ProductService";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 
 function HomePage() {
+  useEffect(() => {
+    document.title = "Cửa hàng điện tử FIFO";
+  }, []);
   const fetchLaptopGamingList = async () => {
     const res = await ProductService.getListProduct("laptop-gaming", 12);
     return res;
@@ -74,7 +77,7 @@ function HomePage() {
           <Col xl={2} lg={3}>
             <SidebarComponent />
           </Col>
-          <Col xl={7} lg={9} className={cx("carousel-holder")}>
+          <Col xl={7} lg={9}>
             <CarouselComponent itemArr={slickerArr} />
           </Col>
           <Col xl={3} lg={0} className={cx("third-col")}>

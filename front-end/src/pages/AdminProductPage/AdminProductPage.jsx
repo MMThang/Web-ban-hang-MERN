@@ -21,7 +21,16 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import { useEffect, useState } from "react";
-import { useQueryParams, StringParam, NumberParam } from "use-query-params";
+import {
+  useQueryParams,
+  withDefault,
+  StringParam,
+  NumberParam,
+  BooleanParam,
+  DelimitedArrayParam,
+  DelimitedNumericArrayParam,
+} from "use-query-params";
+
 import { toLowerCaseNonAccentVietnamese } from "../../utils";
 
 const cx = classnames.bind(styles);
@@ -29,11 +38,17 @@ const cx = classnames.bind(styles);
 function AdminProductPage() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const defaultOutOfStock = withDefault(BooleanParam, false);
   const [query, setQuery] = useQueryParams({
+    brand: DelimitedArrayParam,
     type: StringParam,
+    range: DelimitedNumericArrayParam,
     page: NumberParam,
+    outOfStock: defaultOutOfStock,
   });
-  const [show, setShow] = useState(false);
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [outOfStock, setOutOfStock] = useState(false);
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [type, setType] = useState("");
@@ -43,8 +58,10 @@ function AdminProductPage() {
   const [countInStock, setCountInStock] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShowAddProductModal = () => setShowAddProductModal(true);
+  const handleCloseAddProductModal = () => setShowAddProductModal(false);
+  const handleShowFilterModal = () => setShowFilterModal(true);
+  const handleCloseFilterModal = () => setShowFilterModal(false);
 
   const fetchProductsList = async () => {
     const res = await getListProduct(query.type || "laptop-gaming", 8, query);
@@ -54,10 +71,24 @@ function AdminProductPage() {
     data: products,
     isLoading,
     isError,
-  } = useQuery(["product", query.type, query.page], fetchProductsList, {
-    retry: 3,
-    retryDelay: 1000,
-  });
+  } = useQuery(
+    ["product", query.type, query.page, query.outOfStock],
+    fetchProductsList,
+    {
+      retry: 3,
+      retryDelay: 1000,
+    }
+  );
+
+  let productList;
+
+  if (!query.outOfStock) {
+    productList = products?.data;
+  } else {
+    productList = products?.outOfStock;
+  }
+
+  console.log(productList);
 
   const createMutation = useMutationHook(createProduct);
   const deleteMutation = useMutationHook(deleteProduct);
@@ -65,7 +96,7 @@ function AdminProductPage() {
   useEffect(() => {
     if (createMutation.isSuccess) {
       alert("Tạo sản phẩm thành công");
-      setShow(false);
+      setShowAddProductModal(false);
     }
   }, [createMutation.isSuccess]);
 
@@ -176,14 +207,32 @@ function AdminProductPage() {
               <option>-- Chọn mặt hàng --</option>
               <option value="laptop-gaming">Laptop Gaming</option>
               <option value="laptop">Laptop</option>
+              <option value="pc-lam-viec">PC làm việc</option>
+              <option value="pc-gaming">PC Gaming</option>
+              <option value="man-hinh">Màn hình</option>
               <option value="ban-phim">Bàn phím</option>
+              <option value="chuot-may-tinh">Chuột & lót chuột</option>
+              <option value="tai-nghe">Tai nghe</option>
             </Form.Select>
-            <Button onClick={handleShow} className={cx("add-product-btn")}>
+            <Button
+              onClick={handleShowAddProductModal}
+              className={cx("add-product-btn")}
+            >
               Thêm mới sản phẩm+
             </Button>
+            <Button
+              onClick={handleShowFilterModal}
+              className={cx("add-product-btn")}
+            >
+              Bộ lọc
+            </Button>
           </div>
-          {/* Modal thêm mới sản phẩm (không nên mở ra) */}
-          <Modal show={show} onHide={handleClose} centered>
+
+          <Modal
+            show={showAddProductModal}
+            onHide={handleCloseAddProductModal}
+            centered
+          >
             <Modal.Header closeButton>
               <Modal.Title>Thêm sản phẩm</Modal.Title>
             </Modal.Header>
@@ -215,7 +264,12 @@ function AdminProductPage() {
                     <option>--Chọn mặt hàng--</option>
                     <option value="laptop-gaming">Laptop Gaming</option>
                     <option value="laptop">Laptop</option>
+                    <option value="pc-lam-viec">PC làm việc</option>
+                    <option value="pc-gaming">PC Gaming</option>
+                    <option value="man-hinh">Màn hình</option>
                     <option value="ban-phim">Bàn phím</option>
+                    <option value="chuot-may-tinh">Chuột & lót chuột</option>
+                    <option value="tai-nghe">Tai nghe</option>
                   </Form.Select>
                 </Form.Group>
                 <Form.Group>
@@ -271,10 +325,48 @@ function AdminProductPage() {
               <div>Giá trị không được thấp hơn 0</div>
             )}
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" onClick={handleCloseAddProductModal}>
                 Hủy
               </Button>
               <Button variant="primary" onClick={handleCreateProduct}>
+                Lọc
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <Modal
+            show={showFilterModal}
+            onHide={handleCloseFilterModal}
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Thêm sản phẩm</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div>
+                <strong>Hết hàng</strong>
+              </div>
+              <Form.Check
+                checked={outOfStock}
+                onChange={() => {
+                  if (!outOfStock) {
+                    setOutOfStock(true);
+                  } else {
+                    setOutOfStock(false);
+                  }
+                }}
+              ></Form.Check>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseFilterModal}>
+                Hủy
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setQuery({ outOfStock: outOfStock });
+                }}
+              >
                 Tạo
               </Button>
             </Modal.Footer>
@@ -297,7 +389,7 @@ function AdminProductPage() {
               </tr>
             </thead>
             <tbody>
-              {products.data.map((product, index) => {
+              {productList.map((product, index) => {
                 return (
                   <tr key={index}>
                     <td>{index + 1}</td>

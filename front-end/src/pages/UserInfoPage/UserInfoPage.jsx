@@ -12,7 +12,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import jwt_decode from "jwt-decode";
-import { getUser, updateUser } from "../../service/UserService";
+import { updateUser } from "../../service/UserService";
 import { updateUser as updateUserSlide } from "../../redux/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutationHook } from "../../hooks/useMutationHook";
@@ -33,8 +33,12 @@ function UserInfoPage() {
   const [name, setName] = useState(user?.name);
   const [phone, setPhone] = useState(user?.phone);
   const [address, setAddress] = useState(user?.address);
+  const [district, setDistrict] = useState(user?.district);
+  const [ward, setWard] = useState(user?.ward);
   const [city, setCity] = useState(user?.city);
   const [cityOption, setCityOption] = useState([]);
+  const [districtOption, setDistrictOption] = useState([]);
+  const [wardOption, setWardOption] = useState([]);
 
   //useEffect lấy dữ liệu về 63 tỉnh thành
   useEffect(() => {
@@ -52,6 +56,46 @@ function UserInfoPage() {
   }, []);
 
   useEffect(() => {
+    async function getCity() {
+      try {
+        const res = await axios.get(
+          "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json"
+        );
+        const cityToCompare = city ? city : user?.city;
+        const getCity = res.data.find(
+          (cityItem) => cityItem.Name === cityToCompare
+        );
+        setDistrictOption(getCity.Districts);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getCity();
+  }, [city, user?.city]);
+
+  useEffect(() => {
+    async function getDistrict() {
+      try {
+        const res = await axios.get(
+          "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json"
+        );
+        const cityToCompare = city ? city : user?.city;
+        const getCity = res.data.find(
+          (cityItem) => cityItem.Name === cityToCompare
+        );
+        const districtToCompare = district ? district : user?.district;
+        const getDistrict = getCity.Districts.find(
+          (districtItem) => districtItem.Name === districtToCompare
+        );
+        setWardOption(getDistrict.Wards);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getDistrict();
+  }, [district, user?.district, city, user?.city]);
+
+  useEffect(() => {
     if (mutation.isSuccess) {
       const { storageData } = handleDecoded();
       dispatch(
@@ -60,6 +104,8 @@ function UserInfoPage() {
           name: name ? name : user?.name,
           phone: phone ? phone : user?.phone,
           address: address ? address : user?.address,
+          district: district ? district : user?.district,
+          ward: ward ? ward : ward?.ward,
           city: city ? city : user?.city,
           access_token: storageData,
         })
@@ -87,6 +133,8 @@ function UserInfoPage() {
       name: name ? name : user?.name,
       phone: phone ? phone : user?.phone,
       address: address ? address : user?.address,
+      district: district ? district : user?.district,
+      ward: ward ? ward : user?.ward,
       city: city ? city : user?.city,
       access_token: storageData,
     });
@@ -182,18 +230,6 @@ function UserInfoPage() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label className={cx("label")}>Địa chỉ</Form.Label>
-              <Form.Control
-                className={cx("input")}
-                type="text"
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-                placeholder={user?.address}
-                disabled={disabled}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
               <Form.Label className={cx("label")}>Tỉnh/ thành</Form.Label>
               <Form.Select
                 className={cx("input")}
@@ -203,7 +239,7 @@ function UserInfoPage() {
                 value={city ? city : user?.city}
                 disabled={disabled}
               >
-                <option>Open this select menu</option>
+                <option value="">-- Chọn Tỉnh, Thành phố --</option>
                 {cityOption.map((city) => {
                   return (
                     <option key={city.Id} value={city.Name}>
@@ -212,6 +248,58 @@ function UserInfoPage() {
                   );
                 })}
               </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className={cx("label")}>Quận, Huyện</Form.Label>
+              <Form.Select
+                className={cx("input")}
+                onChange={(e) => {
+                  setDistrict(e.target.value);
+                }}
+                value={district ? district : user?.district}
+                disabled={disabled}
+              >
+                <option value="">-- Chọn Quận, Huyện --</option>
+                {districtOption.map((district) => {
+                  return (
+                    <option key={district.Id} value={district.Name}>
+                      {district.Name}
+                    </option>
+                  );
+                })}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className={cx("label")}>Xã, Phường</Form.Label>
+              <Form.Select
+                className={cx("input")}
+                onChange={(e) => {
+                  setWard(e.target.value);
+                }}
+                value={ward ? ward : user?.ward}
+                disabled={disabled}
+              >
+                <option value="">-- Chọn Xã, Phường --</option>
+                {wardOption.map((ward) => {
+                  return (
+                    <option key={ward.Id} value={ward.Name}>
+                      {ward.Name}
+                    </option>
+                  );
+                })}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className={cx("label")}>Số nhà, tên đường</Form.Label>
+              <Form.Control
+                className={cx("input")}
+                type="text"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                placeholder={user?.address}
+                disabled={disabled}
+              />
             </Form.Group>
           </Col>
 

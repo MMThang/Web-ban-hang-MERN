@@ -1,0 +1,25 @@
+.user-order-page-container {
+  margin-top: 98px;
+  min-height: 600px;
+}
+
+.order-item {
+  background-color: white;
+  margin-bottom: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.no-order-box {
+  background-color: white;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+}
+
+.home-btn {
+  font-size: 2rem;
+}

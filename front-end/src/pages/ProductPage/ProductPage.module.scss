@@ -1,6 +1,5 @@
 .first-main-body {
   margin-top: 98px;
-  background-color: white;
 }
 
 .product-image-column {
@@ -59,6 +58,7 @@
 .product-buy-button {
   width: 300px;
   height: 60px;
+  margin-top: 8px;
   font-size: 2rem;
   background-color: var(--emphasize-color);
   border: none;
@@ -67,6 +67,12 @@
 @media screen and (max-width: 992px) {
   .first-main-body {
     margin-top: 12px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 546px) {
+  .product-buy-button {
     width: 100%;
   }
 }

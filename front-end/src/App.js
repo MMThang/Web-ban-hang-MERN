@@ -13,6 +13,17 @@ import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 function App() {
   const dispatch = useDispatch();
 
+  const handleDecoded = () => {
+    let storageData = localStorage.getItem("access_token");
+    let decoded = {};
+    if (storageData && isJsonString(storageData)) {
+      storageData = JSON.parse(storageData);
+
+      decoded = jwt_decode(storageData);
+    }
+    return { decoded, storageData };
+  };
+
   const handleGetUser = useCallback(
     async (id, accessToken) => {
       try {
@@ -34,17 +45,6 @@ function App() {
     }
   }, [handleGetUser]);
 
-  const handleDecoded = () => {
-    let storageData = localStorage.getItem("access_token");
-    let decoded = {};
-    if (storageData && isJsonString(storageData)) {
-      storageData = JSON.parse(storageData);
-
-      decoded = jwt_decode(storageData);
-    }
-    return { decoded, storageData };
-  };
-
   axiosJWT.interceptors.request.use(
     async function (config) {
       const currentTime = new Date();
@@ -64,26 +64,21 @@ function App() {
     <Router>
       <QueryParamProvider adapter={ReactRouter6Adapter}>
         <Routes>
-          {routes.map(
-            (route, index) => {
-              return route.isPrivate ? (
-                route.isAdmin ? (
-                  <Route element={<AdminRoute />} key={index}>
-                    <Route element={route.element} path={route.path} />
-                  </Route>
-                ) : (
-                  <Route element={<PrivateRoute />} key={index}>
-                    <Route element={route.element} path={route.path} />
-                  </Route>
-                )
+          {routes.map((route, index) => {
+            return route.isPrivate ? (
+              route.isAdmin ? (
+                <Route element={<AdminRoute />} key={index}>
+                  <Route element={route.element} path={route.path} />
+                </Route>
               ) : (
-                <Route key={index} path={route.path} element={route.element} />
-              );
-            }
-            // return (
-            //   <Route key={index} path={route.path} element={route.element} />
-            // );
-          )}
+                <Route element={<PrivateRoute />} key={index}>
+                  <Route element={route.element} path={route.path} />
+                </Route>
+              )
+            ) : (
+              <Route key={index} path={route.path} element={route.element} />
+            );
+          })}
         </Routes>
       </QueryParamProvider>
     </Router>

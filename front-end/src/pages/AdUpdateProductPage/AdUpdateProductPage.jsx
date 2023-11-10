@@ -54,7 +54,7 @@ function AdUpdateProductPage() {
       alert("Cập nhật thành công");
       navigate(`/system/admin/products?type=${product.data.type}`);
     }
-  }, [updateMutation.isSuccess, navigate, product.data.type]);
+  }, [updateMutation.isSuccess, navigate]);
 
   const handleAddImage = async (e) => {
     const file = e.target.files[0];

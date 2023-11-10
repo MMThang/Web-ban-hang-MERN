@@ -1,0 +1,27 @@
+.order-info-page-container {
+  margin-top: 98px;
+  height: fit-content;
+  width: 100%;
+}
+
+.form-input {
+  height: 50px;
+  font-size: 1.8rem;
+  margin-top: 12px;
+}
+
+.buy-btn {
+  margin-top: 8px;
+  width: 50%;
+  height: 45px;
+  font-size: 1.8rem;
+}
+
+@media screen and (max-width: 992px) {
+  .order-info-page-container {
+    margin-top: 8px;
+  }
+  .buy-btn {
+    width: 100%;
+  }
+}
