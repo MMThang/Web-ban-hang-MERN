@@ -62,5 +62,5 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "sass": "^1.67.0"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "https://fifo-jr4v.onrender.com"
 }
