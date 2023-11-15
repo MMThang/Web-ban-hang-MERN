@@ -29,7 +29,6 @@ export const getOrder = async (access_token, orderId) => {
 export const getUserOrder = async (access_token, userId) => {
   const res = await axiosJWT.get(
     `${process.env.REACT_APP_BACKEND_URL}/order/my-order/${userId}`,
-
     {
       headers: {
         token: `Bearer ${access_token}`,

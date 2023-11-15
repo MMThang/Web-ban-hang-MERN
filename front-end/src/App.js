@@ -45,20 +45,20 @@ function App() {
     }
   }, [handleGetUser]);
 
-  axiosJWT.interceptors.request.use(
-    async function (config) {
-      const currentTime = new Date();
-      let { decoded } = handleDecoded();
-      if (decoded?.exp < currentTime.getTime() / 1000) {
-        const data = await refreshToken();
-        config.headers["token"] = `Bearer ${data?.access_token}`;
-      }
-      return config;
-    },
-    function (error) {
-      return Promise.reject(error);
-    }
-  );
+  // axiosJWT.interceptors.request.use(
+  //   async function (config) {
+  //     const currentTime = new Date();
+  //     let { decoded } = handleDecoded();
+  //     if (decoded?.exp < currentTime.getTime() / 1000) {
+  //       const data = await refreshToken();
+  //       config.headers["token"] = `Bearer ${data?.access_token}`;
+  //     }
+  //     return config;
+  //   },
+  //   function (error) {
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   return (
     <Router>

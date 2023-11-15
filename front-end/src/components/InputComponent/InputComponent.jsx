@@ -8,7 +8,6 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/esm/Image";
 import { useNavigate } from "react-router-dom";
-import { useQueryParams, StringParam, NumberParam } from "use-query-params";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useRef } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -23,10 +22,6 @@ function InputComponent() {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(true);
   const debouncedValue = useDebounce(search, 500);
-  const [query, setQuery] = useQueryParams({
-    q: StringParam,
-    page: NumberParam,
-  });
 
   const fetchSearchResult = async () => {
     const res = await ProductService.searchProduct(
@@ -51,8 +46,8 @@ function InputComponent() {
   };
 
   const handleSearch = () => {
-    setQuery({ q: search, page: 1 });
-    navigate(`/search/result?q=${query.q}&page=${query.page}`);
+    // setQuery({ q: search, page: 1 });
+    navigate(`/search/result?q=${search}&page=${1}`);
   };
 
   return (

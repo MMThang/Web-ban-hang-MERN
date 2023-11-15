@@ -22,10 +22,16 @@ function UserOrderPage() {
     const res = await getUserOrder(user?.access_token, params.id);
     return res;
   };
-  const { data: userOrder } = useQuery(["getUserOrder"], fetchUserOrder, {
-    retry: 3,
-    retryDelay: 1000,
-  });
+  const { data: userOrder, isLoading } = useQuery(
+    ["getUserOrder"],
+    fetchUserOrder,
+    {
+      retry: 3,
+      retryDelay: 1000,
+    }
+  );
+
+  if (isLoading) return "...loading";
 
   return (
     <div>

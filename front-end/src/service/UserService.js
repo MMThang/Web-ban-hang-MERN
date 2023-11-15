@@ -99,12 +99,12 @@ export const removeCartProduct = async (id, data, access_token) => {
   return res.data;
 };
 
-export const refreshToken = async () => {
-  const res = await axios.post(
-    `${process.env.REACT_APP_BACKEND_URL}/user/refresh-token`,
-    {
-      withCredentials: true,
-    }
-  );
-  return res.data;
-};
+// export const refreshToken = async () => {
+//   const res = await axios.post(
+//     `${process.env.REACT_APP_BACKEND_URL}/user/refresh-token`,
+//     {
+//       withCredentials: true,
+//     }
+//   );
+//   return res.data;
+// };

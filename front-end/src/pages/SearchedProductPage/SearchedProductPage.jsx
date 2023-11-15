@@ -7,7 +7,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import CardComponent from "../../components/CardComponent";
 import LoadingComponent from "../../components/LoadingComponent";
-
 import * as ProductService from "../../service/ProductService";
 import { useQuery } from "@tanstack/react-query";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";

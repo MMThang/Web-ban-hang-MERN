@@ -1,5 +1,4 @@
 const User = require("../models/UserModel");
-const Product = require("../models/ProductModel");
 const bcrypt = require("bcrypt");
 const JwtService = require("./JwtService");
 
@@ -75,15 +74,15 @@ const loginUserService = (user) => {
         isAdmin: checkUser.isAdmin,
       });
 
-      const refresh_token = JwtService.genneralRefreshToken({
-        id: checkUser.id,
-        isAdmin: checkUser.isAdmin,
-      });
+      // const refresh_token = JwtService.genneralRefreshToken({
+      //   id: checkUser.id,
+      //   isAdmin: checkUser.isAdmin,
+      // });
       resolve({
         status: "OK",
         message: "SUCCESS",
         access_token,
-        refresh_token,
+        // refresh_token,
       });
     } catch (error) {
       reject(error);

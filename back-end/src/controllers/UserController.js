@@ -48,13 +48,13 @@ const loginUser = async (req, res) => {
       });
     }
     const respond = await UserService.loginUserService(req.body);
-    const { refresh_token, ...rest } = respond;
-    res.cookie("refresh_token", refresh_token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict",
-    });
-    return res.status(200).json(rest);
+    // const { refresh_token, ...rest } = respond;
+    // res.cookie("refresh_token", refresh_token, {
+    //   httpOnly: true,
+    //   secure: false,
+    //   sameSite: "none",
+    // });
+    return res.status(200).json(/*rest*/ respond);
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
@@ -122,23 +122,23 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const verifyRefreshToken = async (req, res) => {
-  try {
-    const refreshToken = req.cookies.refresh_token;
-    if (!refreshToken) {
-      return res.status(400).json({
-        status: "token ERR",
-        message: "missing token",
-      });
-    }
+// const verifyRefreshToken = async (req, res) => {
+//   try {
+//     const refreshToken = req.cookies.refresh_token;
+//     if (!refreshToken) {
+//       return res.status(400).json({
+//         status: "token ERR",
+//         message: "missing token",
+//       });
+//     }
 
-    const respond = await JwtService.verifyRefreshTokenService(refreshToken);
-    return res.status(200).json(respond);
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json(error);
-  }
-};
+//     const respond = await JwtService.verifyRefreshTokenService(refreshToken);
+//     return res.status(200).json(respond);
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(400).json(error);
+//   }
+// };
 
 module.exports = {
   createUser,
@@ -148,5 +148,5 @@ module.exports = {
   getOneUser,
   updateUser,
   deleteUser,
-  verifyRefreshToken,
+  // verifyRefreshToken,
 };
